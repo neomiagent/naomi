@@ -1,0 +1,47 @@
+{
+  "name": "naomi",
+  "version": "0.1.0",
+  "description": "Naomi — AI-filtered sniper agent for Solana memecoins. Listens to pump.fun and DEX migrations, scores tokens with Claude, auto-enters via Jito bundles.",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "paper": "MODE=paper tsx src/index.ts",
+    "live": "MODE=live tsx src/index.ts",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "solana",
+    "sniper",
+    "memecoin",
+    "pump-fun",
+    "trading-bot",
+    "ai",
+    "claude",
+    "jito",
+    "naomi"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0",
+    "@solana/spl-token": "^0.4.0",
+    "@solana/web3.js": "^1.95.0",
+    "bs58": "^6.0.0",
+    "dotenv": "^16.4.0",
+    "pino": "^9.0.0",
+    "pino-pretty": "^11.0.0",
+    "yaml": "^2.5.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0"
+  }
+}

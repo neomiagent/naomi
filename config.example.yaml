@@ -1,0 +1,41 @@
+# Naomi analyzer config
+# Copy to config.yaml and tune.
+
+filter:
+  # Tokens with score below this are dropped from output entirely.
+  min_score: 0.2
+  # Tokens at or above this score get verdict "alert" (when AI agrees).
+  alert_score: 0.7
+  # Hard rejects: anything matching here ends up "ignore" no matter the score.
+  reject:
+    honeypot: true
+    unverified_contract: false
+    mint_function_present: true
+    blacklist_function_present: true
+    ownership_not_renounced: false
+    lp_not_locked: false
+    top10_holders_pct_above: 70
+    min_liquidity_eth: 0.5
+
+sources:
+  uniswap_v2: true
+  uniswap_v3: true
+  # Mempool source needs ETH_WS_URL pointing at a node that exposes pending
+  # transactions with full tx body (alchemy_pendingTransactions or similar).
+  mempool: false
+
+ai:
+  # Enable Claude scoring. If false or no API key, heuristic-only filtering.
+  enabled: true
+  # Cache the system prompt to reduce token cost.
+  prompt_cache: true
+
+output:
+  # Print colorized verdicts to stdout.
+  stdout: true
+  # Append every analyzed token as one JSON object per line. Empty = disabled.
+  jsonl_path: data/analyzed.jsonl
+  # POST verdicts to a webhook (e.g. discord, slack). Empty = disabled.
+  webhook_url:
+  # Minimum verdict to forward to the webhook. Options: alert, watch, ignore.
+  webhook_min_verdict: watch

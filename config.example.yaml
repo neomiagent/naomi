@@ -1,0 +1,51 @@
+# Naomi sniper config
+# Copy to config.yaml and tune for your risk profile.
+
+risk:
+  # SOL spent per trade (max).
+  per_trade_sol: 0.5
+  # Max simultaneously open positions.
+  max_concurrent: 5
+  # Total SOL the bot is allowed to allocate at once.
+  bankroll_cap_sol: 5.0
+
+filter:
+  # Minimum AI score (0-1) required to enter.
+  min_score: 0.7
+  # Hard reject if any of these are true.
+  reject:
+    mint_authority_active: true
+    freeze_authority_active: true
+    lp_not_burned: false      # set true to reject unburned LP
+    top10_holders_pct_above: 70
+    bundle_buyers_above: 8
+
+execution:
+  max_slippage_pct: 15
+  jito_tip_lamports: 100000
+  priority_fee_microlamports: 500000
+  # Time budget from event to submitted tx, in ms.
+  decision_deadline_ms: 1500
+
+position:
+  # Take-profit ladder: [multiplier, % of position to sell]
+  tp_ladder:
+    - [2.0, 0.5]
+    - [5.0, 0.3]
+    - [10.0, 0.2]
+  stop_loss_pct: -50
+  trailing_stop_after_multiplier: 3.0
+  trailing_stop_pct: -25
+  # Force exit if dev wallet sells more than this % of supply.
+  dev_sell_exit_pct: 5
+
+sources:
+  pumpfun: true
+  raydium_migrations: true
+  meteora: false
+
+ai:
+  # Enable Claude scoring. If false, only deterministic filters run.
+  enabled: true
+  # Cache the system prompt to reduce token cost.
+  prompt_cache: true

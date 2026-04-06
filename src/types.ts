@@ -101,3 +101,4 @@ export interface AnalyzedToken extends EnrichedToken {
   analyzedAt: number;
 }
 // drives source-aware filters
+// alert | watch | ignore

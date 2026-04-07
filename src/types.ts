@@ -102,3 +102,4 @@ export interface AnalyzedToken extends EnrichedToken {
 }
 // drives source-aware filters
 // alert | watch | ignore
+// snapshots should not mutate post-enrich

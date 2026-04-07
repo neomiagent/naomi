@@ -60,6 +60,7 @@ export interface FilterDecision {
   reason: string;
 }
 
+// position lifecycle is open until tp ladder fully consumed or sl hit
 export interface Position {
   mint: string;
   pool: string;

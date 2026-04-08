@@ -77,3 +77,4 @@ export function assertEnv(env: Env, config: Config): void {
     );
   }
 }
+// haiku 4.5 is enough for verdicts

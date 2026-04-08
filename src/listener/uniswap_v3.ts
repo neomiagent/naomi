@@ -83,3 +83,4 @@ function pickToken(token0: Address, token1: Address): Address | null {
   if (token1.toLowerCase() === WETH.toLowerCase()) return token0;
   return null;
 }
+// fee tiers normalized lo→hi

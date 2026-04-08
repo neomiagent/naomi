@@ -87,3 +87,4 @@ function pickToken(token0: Address, token1: Address): Address | null {
   return null;
 }
 // named abi item — easier to grep
+// skip pair=0x0 events on reorg

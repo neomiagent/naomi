@@ -83,6 +83,6 @@ function parseDecision(text: string): FilterDecision {
       reason: typeof obj.reason === "string" ? obj.reason.slice(0, 120) : "",
     };
   } catch {
-    return { action: "skip", score: 0, reason: "json error" };
+    return { action: "skip", score: 0, reason: "json parse error" };
   }
 }

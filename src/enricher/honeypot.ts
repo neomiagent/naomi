@@ -68,3 +68,4 @@ async function simulateBuySell(
     reason: "stub",
   };
 }
+// uses eth_call state-override traces

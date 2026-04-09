@@ -84,3 +84,4 @@ function pickToken(token0: Address, token1: Address): Address | null {
   return null;
 }
 // fee tiers normalized lo→hi
+// skip pools where token0 > token1

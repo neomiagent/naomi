@@ -93,3 +93,4 @@ async function isOwnershipRenounced(
     return true;
   }
 }
+// etherscan returns '' for unverified

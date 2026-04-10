@@ -59,3 +59,4 @@ export async function checkHolders(
 
   return stats;
 }
+// no holders endpoint on free tier

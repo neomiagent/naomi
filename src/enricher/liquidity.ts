@@ -108,3 +108,4 @@ const erc20Abi = [
     stateMutability: "view",
   },
 ] as const;
+// fall back to ignored verdict

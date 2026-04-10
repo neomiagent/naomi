@@ -94,3 +94,4 @@ async function isOwnershipRenounced(
   }
 }
 // etherscan returns '' for unverified
+// owner can be address or revert

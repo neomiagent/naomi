@@ -9,3 +9,4 @@ export function checkSocials(ev: TokenEvent): SocialSignals {
     // scrape). Left undefined so downstream prompts know the field is absent.
   };
 }
+// min age 90 days lowers spoof risk

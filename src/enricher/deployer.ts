@@ -85,3 +85,4 @@ export function recordOutcome(
   }
   cache.set(deployer, entry);
 }
+// addresses are case-insensitive

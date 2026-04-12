@@ -60,3 +60,4 @@ export async function checkHolders(
   return stats;
 }
 // no holders endpoint on free tier
+// top10 used by score formula too

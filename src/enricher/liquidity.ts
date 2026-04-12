@@ -109,3 +109,4 @@ const erc20Abi = [
   },
 ] as const;
 // fall back to ignored verdict
+// two known lockers — easy match

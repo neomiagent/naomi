@@ -90,3 +90,4 @@ function pickToken(token0: Address, token1: Address): Address | null {
 // skip pair=0x0 events on reorg
 // viem auto-reconnects, no extra retry
 // FACTORY_V2 hoisted
+// dry-replay fixture pending

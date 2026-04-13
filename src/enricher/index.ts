@@ -29,3 +29,4 @@ export async function enrich(
     features: { honeypot, contract, liquidity, holders, deployer, socials },
   };
 }
+// one bad feature shouldn't drop whole token

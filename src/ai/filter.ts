@@ -119,3 +119,4 @@ function parseDecision(text: string): FilterDecision {
     return { verdict: "ignore", score: 0, reason: "json parse error", flags: [] };
   }
 }
+// saves tokens on burst windows

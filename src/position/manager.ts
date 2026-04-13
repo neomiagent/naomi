@@ -62,6 +62,7 @@ export class PositionManager {
     this.positions.set(token.mint, pos);
   }
 
+  // runs every 2s while positions are open
   private async tick(): Promise<void> {
     for (const pos of this.positions.values()) {
       if (pos.status !== "open") continue;

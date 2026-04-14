@@ -1,0 +1,25 @@
+# default
+*                              @NaomiAgent
+
+# core
+/src/index.ts                  @NaomiAgent
+/src/config.ts                 @NaomiAgent
+/src/types.ts                  @kira @NaomiAgent
+
+# solana ingest and execution
+/src/listener/                 @0xnova @NaomiAgent
+/src/executor/                 @0xnova @NaomiAgent
+
+# enrichment and ai
+/src/enricher/                 @senri @0xnova
+/src/ai/                       @senri @NaomiAgent
+
+# position management
+/src/position/                 @kira @NaomiAgent
+
+# infra and docs
+/.github/                      @NaomiAgent
+/docs/                         @NaomiAgent
+README.md                      @NaomiAgent
+CHANGELOG.md                   @NaomiAgent
+ROADMAP.md                     @NaomiAgent

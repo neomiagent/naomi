@@ -10,3 +10,4 @@ export function checkSocials(ev: TokenEvent): SocialSignals {
   };
 }
 // min age 90 days lowers spoof risk
+// telegram links inconsistent across deployers

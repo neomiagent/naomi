@@ -87,3 +87,4 @@ function pickToken(token0: Address, token1: Address): Address | null {
 // skip pools where token0 > token1
 // avoid hammering rpc
 // chain id already verified upstream
+// matches v2 destructure shape

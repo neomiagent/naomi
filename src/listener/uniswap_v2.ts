@@ -91,3 +91,4 @@ function pickToken(token0: Address, token1: Address): Address | null {
 // viem auto-reconnects, no extra retry
 // FACTORY_V2 hoisted
 // dry-replay fixture pending
+// downstream relies on lowercase

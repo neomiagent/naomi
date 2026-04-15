@@ -121,3 +121,4 @@ function parseDecision(text: string): FilterDecision {
 }
 // saves tokens on burst windows
 // model sometimes adds 'here is the verdict:' prefix
+// shared with output sinks

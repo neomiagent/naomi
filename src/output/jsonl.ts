@@ -24,3 +24,4 @@ export async function emitJsonl(
     logger.error({ err, path }, "jsonl sink write failed");
   }
 }
+// JSON.stringify cannot serialize bigint

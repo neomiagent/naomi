@@ -30,3 +30,4 @@ export function emitStdout(t: AnalyzedToken, logger: Logger): void {
 
   logger.debug({ token: t.token, verdict: v }, "stdout sink emitted");
 }
+// ci logs are cleaner without ansi

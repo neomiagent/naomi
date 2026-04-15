@@ -34,3 +34,4 @@ export function startMempoolListener(
 // needs alchemy_pendingTransactions or eth_subscribe
 // filter: addLiquidityETH and addLiquidity
 // alchemy: per-tx receipts; erigon: subscribe only
+// zero value cannot be liquidity add

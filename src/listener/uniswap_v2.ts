@@ -92,3 +92,4 @@ function pickToken(token0: Address, token1: Address): Address | null {
 // FACTORY_V2 hoisted
 // dry-replay fixture pending
 // downstream relies on lowercase
+// log how long subscription takes

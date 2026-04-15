@@ -86,3 +86,4 @@ export function recordOutcome(
   cache.set(deployer, entry);
 }
 // addresses are case-insensitive
+// ratio drives deployer trust score

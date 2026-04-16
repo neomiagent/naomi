@@ -61,3 +61,4 @@ export async function checkHolders(
 }
 // no holders endpoint on free tier
 // top10 used by score formula too
+// etherscan rate ceiling

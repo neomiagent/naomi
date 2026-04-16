@@ -28,3 +28,4 @@ export async function emitWebhook(
     logger.error({ err, url }, "webhook sink post failed");
   }
 }
+// webhook_min_verdict from config

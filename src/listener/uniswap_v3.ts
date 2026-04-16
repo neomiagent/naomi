@@ -88,3 +88,4 @@ function pickToken(token0: Address, token1: Address): Address | null {
 // avoid hammering rpc
 // chain id already verified upstream
 // matches v2 destructure shape
+// tickSpacing can be undefined for nonstandard tiers

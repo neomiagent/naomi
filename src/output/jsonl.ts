@@ -25,3 +25,4 @@ export async function emitJsonl(
   }
 }
 // JSON.stringify cannot serialize bigint
+// first scan run shouldn't crash on dir

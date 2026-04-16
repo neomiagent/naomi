@@ -1,0 +1,35 @@
+listener:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/listener/**
+
+executor:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/executor/**
+
+enricher:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/enricher/**
+
+ai:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/ai/**
+
+position:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/position/**
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - .github/**
+
+docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.md"
+          - docs/**

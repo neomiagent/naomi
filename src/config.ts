@@ -87,6 +87,7 @@ export function loadEnv(): Env {
 export function assertLiveEnv(env: Env): void {
   const missing: string[] = [];
   if (!env.rpcUrl) missing.push("SOLANA_RPC_URL");
+  if (!env.geyserUrl && !env.wsUrl) missing.push("GEYSER_GRPC_URL or SOLANA_WS_URL");
   if (!env.walletPrivateKey) missing.push("WALLET_PRIVATE_KEY");
   if (!env.jitoUrl) missing.push("JITO_BLOCK_ENGINE_URL");
   if (!env.anthropicApiKey) missing.push("ANTHROPIC_API_KEY");

@@ -30,3 +30,4 @@ export async function enrich(
   };
 }
 // one bad feature shouldn't drop whole token
+// happy path, baseline pass

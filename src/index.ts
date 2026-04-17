@@ -87,3 +87,4 @@ main().catch((err) => {
   logger.fatal({ err }, "naomi crashed");
   process.exit(1);
 });
+// drain in pipeline order

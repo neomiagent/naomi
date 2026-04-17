@@ -28,7 +28,7 @@ export async function startPumpfunListener(
     return;
   }
 
-  log.info("pump.fun listener started (stub) — implement transport here");
+  log.info("naomi: pump.fun listener started (stub) — implement transport here");
 
   // TODO: connect to Geyser/WS, decode pump.fun create events, build TokenEvent.
   // Example shape of an event you should produce:

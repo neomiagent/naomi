@@ -65,7 +65,7 @@ export interface Position {
   mint: string;
   pool: string;
   entryPriceSol: number;
-  amountTokens: number;
+  amountTokens: number; // raw token units, not ui-adjusted
   amountSolSpent: number;
   openedAt: number;
   highestMultiplier: number;

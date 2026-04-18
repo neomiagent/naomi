@@ -1,0 +1,24 @@
+# default
+*                              @NaomiAgent
+
+# core
+/src/index.ts                  @NaomiAgent
+/src/config.ts                 @NaomiAgent
+/src/types.ts                  @kira @NaomiAgent
+
+# uniswap and mempool listeners
+/src/listener/                 @0xnova @NaomiAgent
+
+# enrichment and ai scoring
+/src/enricher/                 @senri @NaomiAgent
+/src/ai/                       @senri @NaomiAgent
+
+# output sinks
+/src/output/                   @kira @NaomiAgent
+
+# infra and docs
+/.github/                      @NaomiAgent
+/docs/                         @NaomiAgent
+README.md                      @NaomiAgent
+CHANGELOG.md                   @NaomiAgent
+ROADMAP.md                     @NaomiAgent

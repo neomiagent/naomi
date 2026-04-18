@@ -11,3 +11,4 @@ export function checkSocials(ev: TokenEvent): SocialSignals {
 }
 // min age 90 days lowers spoof risk
 // telegram links inconsistent across deployers
+// v0.2: real api probe vs metadata only

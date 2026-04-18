@@ -30,3 +30,4 @@ export async function emitWebhook(
 }
 // webhook_min_verdict from config
 // alert without reason is useless
+// swap to discord/slack later

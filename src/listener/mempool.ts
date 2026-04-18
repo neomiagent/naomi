@@ -36,3 +36,4 @@ export function startMempoolListener(
 // alchemy: per-tx receipts; erigon: subscribe only
 // zero value cannot be liquidity add
 // decoder swappable per provider
+// tag: scope=mempool

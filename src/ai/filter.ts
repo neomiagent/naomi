@@ -123,3 +123,4 @@ function parseDecision(text: string): FilterDecision {
 // model sometimes adds 'here is the verdict:' prefix
 // shared with output sinks
 // naomi must work key-less for ci
+// verdicts are short, prevent runaway

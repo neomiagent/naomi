@@ -79,3 +79,4 @@ few seconds end to end:
   your own project.
 - No multichain in this repo. Ethereum mainnet only. Other evm chains
   belong in forks.
+<!-- enricher concurrency capped to 8 -->

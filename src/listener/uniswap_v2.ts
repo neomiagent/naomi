@@ -94,3 +94,4 @@ function pickToken(token0: Address, token1: Address): Address | null {
 // downstream relies on lowercase
 // log how long subscription takes
 // rpc replays under load
+// WETH used by liquidity enricher too

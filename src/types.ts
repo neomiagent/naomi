@@ -104,3 +104,4 @@ export interface AnalyzedToken extends EnrichedToken {
 // alert | watch | ignore
 // snapshots should not mutate post-enrich
 // shape persisted to jsonl
+// trace is the verb we use elsewhere

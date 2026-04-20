@@ -2,6 +2,7 @@ import type { Logger } from "pino";
 import type { Env } from "../config.js";
 import type { TokenEvent } from "../types.js";
 
+// detected via funding-source clustering across the launch slot window
 export interface BundleStats {
   buyersCount: number;
   buyersPct: number;

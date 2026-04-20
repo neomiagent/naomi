@@ -1,6 +1,7 @@
 import type { Logger } from "pino";
 import type { Env } from "../config.js";
 
+// concentration is computed excluding the curve/lp account
 export interface HolderStats {
   uniqueHolders: number;
   top10Pct: number;

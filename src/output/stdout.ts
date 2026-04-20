@@ -33,3 +33,4 @@ export function emitStdout(t: AnalyzedToken, logger: Logger): void {
 // ci logs are cleaner without ansi
 // no more inline escape codes
 // human eyes scan one-liners faster
+// tighter scrollback

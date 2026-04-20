@@ -15,7 +15,7 @@ listens to pump.fun and dex migrations · scores with claude · enters with jito
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Language](https://img.shields.io/badge/lang-typescript-3178c6.svg)](https://www.typescriptlang.org/)
 [![Node](https://img.shields.io/badge/node-%E2%89%A520-339933.svg)](https://nodejs.org/)
-[![CI](https://img.shields.io/badge/ci-passing-brightgreen.svg)](.github/workflows/ci.yml)
+[![CI](https://github.com/NaomiAgent/naomi/actions/workflows/ci.yml/badge.svg)](https://github.com/NaomiAgent/naomi/actions/workflows/ci.yml)
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 [![Solana](https://img.shields.io/badge/chain-solana-9945FF.svg)](https://solana.com)

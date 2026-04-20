@@ -37,3 +37,4 @@ honest, dated, and revised when reality changes.
 - holding keys. no wallet, no signer, no private key handling.
 - multichain in this repo. ethereum mainnet only. fork for other evm chains.
 - copy trading or alpha distribution. that is a different agent.
+<!-- v0.2 trace impl started -->

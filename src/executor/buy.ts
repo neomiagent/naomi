@@ -45,5 +45,5 @@ export async function executeBuy(
 
   logger.warn({ mint: token.mint }, "executeBuy is a stub — implement before live trading");
   void config;
-  return { ok: false, error: "not implemented" };
+  return { ok: false, error: "executor not implemented yet, see TODO" };
 }

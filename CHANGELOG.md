@@ -36,3 +36,4 @@ first tagged version. core analyzer pipeline runs end to end.
 - deployer history cache is in memory only.
 - mempool source has no decoder yet, only a placeholder.
 - holder distribution requires etherscan pro tier.
+<!-- v0.1.0 — listener, enricher, ai, sinks -->

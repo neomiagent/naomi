@@ -79,7 +79,7 @@ function parseDecision(text: string): FilterDecision {
     const obj = JSON.parse(match[0]);
     return {
       action: obj.action === "snipe" ? "snipe" : "skip",
-      score: typeof obj.score === "number" ? obj.score : 0,
+      score: typeof obj.score === "number" ? Math.max(0, Math.min(1, obj.score)) : 0,
       reason: typeof obj.reason === "string" ? obj.reason.slice(0, 120) : "",
     };
   } catch {

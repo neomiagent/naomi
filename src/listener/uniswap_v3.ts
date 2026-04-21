@@ -90,3 +90,4 @@ function pickToken(token0: Address, token1: Address): Address | null {
 // matches v2 destructure shape
 // tickSpacing can be undefined for nonstandard tiers
 // fixture sourced from real mainnet log
+// 0bps tier rare but real

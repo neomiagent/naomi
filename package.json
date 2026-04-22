@@ -1,6 +1,7 @@
 {
   "name": "naomi",
   "version": "0.1.0",
+  "homepage": "https://github.com/NaomiAgent/naomi",
   "description": "Naomi — AI-filtered sniper agent for Solana memecoins. Listens to pump.fun and DEX migrations, scores tokens with Claude, auto-enters via Jito bundles.",
   "type": "module",
   "main": "dist/index.js",

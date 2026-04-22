@@ -71,3 +71,4 @@ async function simulateBuySell(
 // uses eth_call state-override traces
 // TODO: actual trace impl
 // gas: 5_000_000 per call
+// simulate reusable for other traps

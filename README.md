@@ -37,7 +37,7 @@ listens to pump.fun and dex migrations · scores with claude · enters with jito
 
 ## what she does
 
-naomi is a sniper agent for solana memecoins. she does three things, in order:
+naomi is a sniper agent for solana memecoins. open source, mit-licensed. she does three things, in order:
 
 1. **listens** to new launches on pump.fun and dex migrations in real time.
 2. **scores** each token with deterministic on-chain filters and an ai pass through claude.

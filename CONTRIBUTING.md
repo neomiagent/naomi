@@ -55,3 +55,4 @@ a maintainer for the touched zone reviews first. for cross-zone changes, the lea
 ## security issues
 
 do not open a public issue. read `SECURITY.md`.
+<!-- nudge contributors toward eth_call wiring -->

@@ -38,6 +38,8 @@ Total time from event detection to bundle submission target: **<1500 ms**.
 
 ## Modes
 
+Naomi defaults to **paper** mode. Live mode requires explicit env config and will refuse to start if any required env var is missing.
+
 - **paper** — listeners + enricher + filter run, decisions are logged to stdout / positions log, no transactions are signed or sent. Use this to tune your filter without burning capital.
 - **live** — full pipeline. Requires `WALLET_PRIVATE_KEY`, `JITO_BLOCK_ENGINE_URL`, and a paid RPC.
 

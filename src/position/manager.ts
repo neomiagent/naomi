@@ -35,6 +35,7 @@ export class PositionManager {
       pool: token.pool,
       entryPriceSol: 0,
       amountTokens: result.amountTokens ?? 0,
+      // entryPriceSol filled by first tick once price source is wired
       amountSolSpent: result.amountSolSpent ?? 0,
       openedAt: Date.now(),
       highestMultiplier: 1,

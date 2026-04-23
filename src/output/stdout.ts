@@ -34,3 +34,4 @@ export function emitStdout(t: AnalyzedToken, logger: Logger): void {
 // no more inline escape codes
 // human eyes scan one-liners faster
 // tighter scrollback
+// alignment broke when score was 1 digit

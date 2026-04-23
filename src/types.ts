@@ -70,6 +70,6 @@ export interface Position {
   openedAt: number;
   highestMultiplier: number;
   realizedSol: number;
-  status: "open" | "closed";
+  status: "open" | "closing" | "closed";
   tpHit: number[];
 }

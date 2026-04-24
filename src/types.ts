@@ -106,3 +106,4 @@ export interface AnalyzedToken extends EnrichedToken {
 // shape persisted to jsonl
 // trace is the verb we use elsewhere
 // older fixtures lacked socials block
+// auto-imports show better hovers

@@ -244,3 +244,4 @@ v0.1.0 shipped 2026-04-25. v0.2 in progress.
 follow [@NaomiOnEth](https://x.com/NaomiOnEth) for updates.
 
 </div>
+<!-- two install paths now: npm and source -->

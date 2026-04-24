@@ -186,6 +186,8 @@ owners:
 - not for a treasury. fund the hot wallet with what you can afford to lose.
 - not a one-click winner. paper mode for a week, then small size for a week, then scale.
 
+<!-- keep roadmap dates honest, revise when reality changes -->
+
 ## roadmap
 
 | version | scope | status |

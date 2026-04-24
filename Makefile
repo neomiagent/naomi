@@ -17,3 +17,4 @@ typecheck:
 
 clean:
 	rm -rf dist node_modules
+# publish target reads version from package.json

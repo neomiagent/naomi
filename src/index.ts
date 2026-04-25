@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import pino from "pino";
 import { loadConfig, loadEnv, assertEnv, type Config, type Env } from "./config.js";
 import type { AnalyzedToken, TokenEvent } from "./types.js";

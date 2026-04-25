@@ -4,6 +4,8 @@
 
 listens to new token launches · runs honeypot and contract checks · scores with claude · no trading, just verdicts
 
+[![npm](https://img.shields.io/npm/v/naomi-scanner.svg?color=cb3837&label=npm)](https://www.npmjs.com/package/naomi-scanner)
+[![npm downloads](https://img.shields.io/npm/dm/naomi-scanner.svg?color=cb3837)](https://www.npmjs.com/package/naomi-scanner)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Language](https://img.shields.io/badge/lang-typescript-3178c6.svg)](https://www.typescriptlang.org/)
 [![Node](https://img.shields.io/badge/node-%E2%89%A520-339933.svg)](https://nodejs.org/)
@@ -82,6 +84,16 @@ the edge is verdict quality, not millisecond speed. naomi is meant to be slower 
 | ai score | claude reads the full feature set, returns verdict | 🟢 v0.1 |
 
 ## quickstart
+
+install from npm:
+
+```bash
+npm install -g naomi-scanner
+# or one-shot:
+npx naomi-scanner
+```
+
+or from source:
 
 ```bash
 git clone https://github.com/NaomiAgent/naomi.git

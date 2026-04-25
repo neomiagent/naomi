@@ -1,17 +1,38 @@
 {
-  "name": "naomi",
+  "name": "naomi-scanner",
   "version": "0.1.0",
   "homepage": "https://github.com/NaomiAgent/naomi",
   "description": "Naomi — autonomous agent scanner for Ethereum token launches. Listens to Uniswap and mempool, runs honeypot and contract checks, scores with Claude. No trading, just verdicts.",
   "type": "module",
   "main": "dist/index.js",
+  "bin": {
+    "naomi": "dist/index.js",
+    "naomi-scanner": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "config.example.yaml",
+    ".env.example",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NaomiAgent/naomi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NaomiAgent/naomi/issues"
+  },
+  "author": "NaomiAgent",
   "scripts": {
     "build": "tsc",
     "dev": "tsx watch src/index.ts",
     "start": "node dist/index.js",
     "scan": "tsx src/index.ts",
     "lint": "eslint src --ext .ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "ethereum",

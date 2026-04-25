@@ -11,6 +11,7 @@ listens to new token launches · runs honeypot and contract checks · scores wit
 [![Node](https://img.shields.io/badge/node-%E2%89%A520-339933.svg)](https://nodejs.org/)
 [![CI](https://github.com/NaomiAgent/naomi/actions/workflows/ci.yml/badge.svg)](https://github.com/NaomiAgent/naomi/actions/workflows/ci.yml)
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Twitter](https://img.shields.io/badge/x-@NaomiOnEth-000000.svg)](https://x.com/NaomiOnEth)
 
 [![Ethereum](https://img.shields.io/badge/chain-ethereum-627eea.svg)](https://ethereum.org)
 [![Uniswap](https://img.shields.io/badge/source-uniswap-ff007a.svg)](https://uniswap.org)
@@ -239,5 +240,7 @@ ethereum, uniswap, etherscan, viem, anthropic. the open-source ecosystem below t
 built in public. if it's not in the repo, it doesn't exist.
 
 v0.1.0 shipped 2026-04-25. v0.2 in progress.
+
+follow [@NaomiOnEth](https://x.com/NaomiOnEth) for updates.
 
 </div>

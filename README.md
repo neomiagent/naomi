@@ -222,4 +222,6 @@ solana, pump.fun, jito labs, anthropic. the open-source community around solana 
 
 built in public. if it's not in the repo, it doesn't exist.
 
+v0.1.0 shipped 2026-04-22. v0.2 in progress.
+
 </div>

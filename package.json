@@ -1,6 +1,6 @@
 {
   "name": "naomi-scanner",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/NaomiAgent/naomi",
   "description": "Naomi — autonomous agent scanner for Ethereum token launches. Listens to Uniswap and mempool, runs honeypot and contract checks, scores with Claude. No trading, just verdicts.",
   "type": "module",

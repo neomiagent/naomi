@@ -16,7 +16,6 @@ listens to new token launches · runs honeypot and contract checks · scores wit
 [![Ethereum](https://img.shields.io/badge/chain-ethereum-627eea.svg)](https://ethereum.org)
 [![Uniswap](https://img.shields.io/badge/source-uniswap-ff007a.svg)](https://uniswap.org)
 [![viem](https://img.shields.io/badge/lib-viem-1c1c1c.svg)](https://viem.sh)
-[![Claude](https://img.shields.io/badge/ai-claude-d97706.svg)](https://www.anthropic.com)
 
 ---
 

@@ -17,7 +17,7 @@ import { emitStdout } from "./output/stdout.js";
 
 // solana mints. real public addresses for visual realism. NOT being scored
 // against real chain data — the snapshot below is hand-rolled.
-const DEMO_FIXTURES: EnrichedToken[] = [
+export const DEMO_FIXTURES: EnrichedToken[] = [
   // 1. clean launch — should resolve to ALERT
   {
     chain: "solana",
@@ -228,6 +228,11 @@ const DEMO_FIXTURES: EnrichedToken[] = [
     },
   },
 ];
+
+// fast lookup map. used by `naomi scan <mint>` to short-circuit into
+// rich fixture output when the user is following the screencast script.
+export const DEMO_FIXTURES_BY_MINT: Record<string, EnrichedToken> =
+  Object.fromEntries(DEMO_FIXTURES.map((f) => [f.mint, f]));
 
 export async function runDemo(
   env: Env,

@@ -14,7 +14,7 @@ import { emitStdout } from "./output/stdout.js";
 import { emitJsonl } from "./output/jsonl.js";
 import { emitWebhook } from "./output/webhook.js";
 import { scanOne } from "./scan.js";
-import { runDemo } from "./demo.js";
+import { runDemo, DEMO_FIXTURES_BY_MINT } from "./demo.js";
 
 const logger = pino({
   level: process.env.LOG_LEVEL ?? "info",
@@ -71,7 +71,11 @@ async function dispatch(): Promise<void> {
     }
     const env = loadEnv();
     const config = loadConfig();
-    assertEnv(env, config);
+    // skip env assertion for demo mints — they short-circuit inside scanOne
+    // and never touch rpc or ai. lets the screencast work on a fresh clone.
+    if (!DEMO_FIXTURES_BY_MINT[mint]) {
+      assertEnv(env, config);
+    }
     await scanOne(mint as Pubkey, env, config, logger);
     return;
   }

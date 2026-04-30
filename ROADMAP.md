@@ -21,7 +21,7 @@ alive. all the eth-era work lives at the v0.1.0 tag.
 - **first-60s snapshot** interface: unique buyers, total buys, jito-bundled buys, sniper pubkeys, dev self-bought
 - claude verdict prompt rewritten for solana semantics
 - types and config reshaped (slot, signature, pubkey, lamports)
-- repo url moved to pay402sol/naomi (account login rename, auto-redirect from old NaomiAgent path)
+- repo url moved to neomiagent/naomi (account login rename, auto-redirect from old NaomiAgent path)
 
 ## v0.3 in progress, target 2026-05-15
 

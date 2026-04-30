@@ -36,7 +36,7 @@ solana-only from here.
 - listeners replaced wholesale: `uniswap_v2.ts`, `uniswap_v3.ts`, `mempool.ts` removed; `pumpfun.ts`, `raydium_launchpad.ts`, `geyser.ts` added
 - `config.yaml` schema: removed eth-specific reject rules (honeypot, mint_function_present, blacklist_function_present, lp_not_locked); added solana rules (mint_authority_not_renounced, freeze_authority_not_renounced, metadata_mutable, bonded_pct_below, first60s_unique_buyers_below, dev_self_bought)
 - output stdout sink shows `liq=Xsol`, `top10=Y%`, and `buyers60s=Z` instead of eth-era counterparts
-- repository url moved to `pay402sol/naomi` (account login renamed from `NaomiAgent` upstream; old urls auto-redirect)
+- repository url moved to `neomiagent/naomi` (account login renamed from `NaomiAgent` upstream; old urls auto-redirect)
 - score cap aligned with the family standard at 0.95
 
 ### removed
@@ -86,6 +86,6 @@ first tagged version. core analyzer pipeline runs end to end.
 - mempool source had no decoder yet, only a placeholder.
 - holder distribution required etherscan pro tier.
 
-[0.2.0]: https://github.com/pay402sol/naomi/releases/tag/v0.2.0
-[0.1.0]: https://github.com/pay402sol/naomi/releases/tag/v0.1.0
+[0.2.0]: https://github.com/neomiagent/naomi/releases/tag/v0.2.0
+[0.1.0]: https://github.com/neomiagent/naomi/releases/tag/v0.1.0
 <!-- v0.2.0 — chain pivot to solana, first-60s scope -->

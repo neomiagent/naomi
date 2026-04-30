@@ -1,7 +1,7 @@
 {
   "name": "naomi-scanner",
   "version": "0.2.0",
-  "homepage": "https://github.com/pay402sol/naomi",
+  "homepage": "https://github.com/neomiagent/naomi",
   "description": "Naomi — autonomous forensic analyzer for Solana token launches. Watches pump.fun + raydium-launchpad, snapshots the first 60 seconds (buyers, jito bundles, dev wallet), scores with Claude. No trading, just verdicts.",
   "type": "module",
   "main": "dist/index.js",
@@ -19,12 +19,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pay402sol/naomi.git"
+    "url": "git+https://github.com/neomiagent/naomi.git"
   },
   "bugs": {
-    "url": "https://github.com/pay402sol/naomi/issues"
+    "url": "https://github.com/neomiagent/naomi/issues"
   },
-  "author": "pay402sol",
+  "author": "neomiagent",
   "scripts": {
     "build": "tsc",
     "dev": "tsx watch src/index.ts",

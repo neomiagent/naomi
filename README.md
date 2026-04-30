@@ -9,7 +9,7 @@ watches every pump.fun and raydium-launchpad launch · snapshots the first 60 se
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Language](https://img.shields.io/badge/lang-typescript-3178c6.svg)](https://www.typescriptlang.org/)
 [![Node](https://img.shields.io/badge/node-%E2%89%A520-339933.svg)](https://nodejs.org/)
-[![CI](https://github.com/pay402sol/naomi/actions/workflows/ci.yml/badge.svg)](https://github.com/pay402sol/naomi/actions/workflows/ci.yml)
+[![CI](https://github.com/neomiagent/naomi/actions/workflows/ci.yml/badge.svg)](https://github.com/neomiagent/naomi/actions/workflows/ci.yml)
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 [![Solana](https://img.shields.io/badge/chain-solana-9945ff.svg)](https://solana.com)
@@ -99,7 +99,7 @@ npx naomi-scanner
 or from source:
 
 ```bash
-git clone https://github.com/pay402sol/naomi.git
+git clone https://github.com/neomiagent/naomi.git
 cd naomi
 npm install
 cp .env.example .env
@@ -198,7 +198,7 @@ owners:
 
 | zone | owners |
 |---|---|
-| core, config, ci, docs | @pay402sol |
+| core, config, ci, docs | @neomiagent |
 | listeners (pumpfun, raydium-launchpad, geyser) | @0xnova |
 | enricher, ai filter, scoring, first-60s | @senri |
 | types, output sinks, cli | @kira |

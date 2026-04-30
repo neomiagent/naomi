@@ -1,86 +1,50 @@
-import { createPublicClient, http, type Address, type Hex } from "viem";
-import { mainnet } from "viem/chains";
+import { Connection, PublicKey } from "@solana/web3.js";
+import { getMint } from "@solana/spl-token";
 import type { Logger } from "pino";
 import type { Env } from "./config.js";
 import type { Config } from "./config.js";
-import type { TokenEvent, FilterDecision } from "./types.js";
+import type { FilterDecision, Pubkey, TokenEvent } from "./types.js";
 import { enrich } from "./enricher/index.js";
 import { runFilter } from "./ai/filter.js";
 
-const FACTORY_V2 = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f" as const;
-const WETH = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" as const;
-const ZERO = "0x0000000000000000000000000000000000000000" as const;
-
-const erc20Abi = [
-  { inputs: [], name: "name", outputs: [{ type: "string" }], stateMutability: "view", type: "function" },
-  { inputs: [], name: "symbol", outputs: [{ type: "string" }], stateMutability: "view", type: "function" },
-  { inputs: [], name: "decimals", outputs: [{ type: "uint8" }], stateMutability: "view", type: "function" },
-] as const;
-
-const factoryV2Abi = [
-  {
-    inputs: [{ type: "address" }, { type: "address" }],
-    name: "getPair",
-    outputs: [{ type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-] as const;
-
 export async function scanOne(
-  address: Address,
+  mint: Pubkey,
   env: Env,
   config: Config,
   logger: Logger,
 ): Promise<void> {
-  const client = createPublicClient({ chain: mainnet, transport: http(env.rpcUrl) });
+  const connection = new Connection(env.rpcUrl, "confirmed");
 
-  let name: string | undefined;
-  let symbol: string | undefined;
+  let decimals = 0;
+  let totalSupply = 0n;
   try {
-    const [n, s] = await Promise.all([
-      client.readContract({ address, abi: erc20Abi, functionName: "name" }),
-      client.readContract({ address, abi: erc20Abi, functionName: "symbol" }),
-    ]);
-    name = n as string;
-    symbol = s as string;
+    const m = await getMint(connection, new PublicKey(mint));
+    decimals = m.decimals;
+    totalSupply = m.supply;
   } catch (err) {
     logger.debug({ err }, "metadata fetch failed");
   }
 
-  let pair: Address | null = null;
-  try {
-    const result = (await client.readContract({
-      address: FACTORY_V2,
-      abi: factoryV2Abi,
-      functionName: "getPair",
-      args: [address, WETH],
-    })) as Address;
-    if (result.toLowerCase() !== ZERO) pair = result;
-  } catch (err) {
-    logger.debug({ err }, "factory pair lookup failed");
-  }
-
   const ev: TokenEvent = {
-    chain: "ethereum",
-    source: "uniswap_v2",
-    token: address,
-    pair,
-    deployer: ZERO,
-    blockNumber: 0n,
-    initialLiquidityEth: 0,
+    chain: "solana",
+    source: "pumpfun",
+    mint,
+    poolOrCurve: null,
+    deployer: "stub",
+    slot: 0n,
+    initialLiquiditySol: 0,
     detectedAt: Date.now(),
-    txHash: "0x0" as Hex,
-    metadata: { name, symbol },
+    signature: "stub",
+    metadata: { decimals, totalSupply },
   };
 
   const enriched = await enrich(ev, env, logger);
   const decision = await runFilter(enriched, env, config, logger);
 
-  printVerdict(address, symbol, decision);
+  printVerdict(mint, decision);
 }
 
-function printVerdict(token: string, symbol: string | undefined, d: FilterDecision): void {
+function printVerdict(mint: string, d: FilterDecision): void {
   const id =
     String(Math.floor(Math.random() * 9999)).padStart(4, "0") +
     "-" +
@@ -100,8 +64,7 @@ function printVerdict(token: string, symbol: string | undefined, d: FilterDecisi
   process.stdout.write("\n");
   process.stdout.write(`${cyan}${bold}naomi${reset}  ${dim}//${reset}  ${cyan}ID: ${id}${reset}\n`);
   process.stdout.write(`${dim}${line}${reset}\n`);
-  process.stdout.write(`${dim}token${reset}     ${token}\n`);
-  if (symbol) process.stdout.write(`${dim}symbol${reset}    $${symbol}\n`);
+  process.stdout.write(`${dim}mint${reset}      ${mint}\n`);
   process.stdout.write(`${dim}scanned${reset}   ${new Date().toISOString()}\n`);
   process.stdout.write(`${dim}score${reset}     ${score100}/100\n`);
   process.stdout.write(`${dim}verdict${reset}   ${color}${bold}${verdict}${reset}\n`);

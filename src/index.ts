@@ -4,10 +4,10 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import pino from "pino";
 import { loadConfig, loadEnv, assertEnv, type Config, type Env } from "./config.js";
-import type { AnalyzedToken, TokenEvent, Address } from "./types.js";
-import { startUniswapV2Listener } from "./listener/uniswap_v2.js";
-import { startUniswapV3Listener } from "./listener/uniswap_v3.js";
-import { startMempoolListener } from "./listener/mempool.js";
+import type { AnalyzedToken, Pubkey, TokenEvent } from "./types.js";
+import { startPumpfunListener } from "./listener/pumpfun.js";
+import { startRaydiumLaunchpadListener } from "./listener/raydium_launchpad.js";
+import { startGeyserListener } from "./listener/geyser.js";
 import { enrich } from "./enricher/index.js";
 import { runFilter } from "./ai/filter.js";
 import { emitStdout } from "./output/stdout.js";
@@ -25,14 +25,14 @@ const logger = pino({
 
 const HELP = `Usage: naomi [options] [command]
 
-autonomous agent scanner on ethereum — scans token launches for trap risk
+autonomous forensic analyzer on solana — snapshots the first 60 seconds of every token launch
 
 Options:
   -V, --version            output the version number
   -h, --help               display help for command
 
 Commands:
-  scan [options] <token>   audit a single ethereum token for launch risk
+  scan [options] <mint>    audit a single solana mint for launch risk
   watch                    listen for new launches and stream verdicts (default)
   help [command]           display help for command
 `;
@@ -62,15 +62,15 @@ async function dispatch(): Promise<void> {
   }
 
   if (head === "scan") {
-    const token = argv[1];
-    if (!token || !token.startsWith("0x")) {
-      process.stderr.write("usage: naomi scan <0x-address>\n");
+    const mint = argv[1];
+    if (!mint || mint.length < 32 || mint.startsWith("0x")) {
+      process.stderr.write("usage: naomi scan <base58-mint>\n");
       process.exit(1);
     }
     const env = loadEnv();
     const config = loadConfig();
     assertEnv(env, config);
-    await scanOne(token as Address, env, config, logger);
+    await scanOne(mint as Pubkey, env, config, logger);
     return;
   }
 
@@ -105,9 +105,11 @@ async function runWatch(): Promise<void> {
   const handle = makeHandler(env, config);
   const stops: Array<() => void> = [];
 
-  if (config.sources.uniswap_v2) stops.push(startUniswapV2Listener(env, logger, handle));
-  if (config.sources.uniswap_v3) stops.push(startUniswapV3Listener(env, logger, handle));
-  if (config.sources.mempool) stops.push(startMempoolListener(env, logger, handle));
+  if (config.sources.pumpfun) stops.push(startPumpfunListener(env, logger, handle));
+  if (config.sources.raydium_launchpad) {
+    stops.push(startRaydiumLaunchpadListener(env, logger, handle));
+  }
+  if (config.sources.geyser) stops.push(startGeyserListener(env, logger, handle));
 
   const shutdown = () => {
     logger.info("shutdown signal received, stopping listeners");
@@ -130,7 +132,7 @@ function makeHandler(env: Env, config: Config) {
       };
 
       if (decision.score < config.filter.min_score && decision.verdict === "ignore") {
-        logger.debug({ token: ev.token, score: decision.score }, "below min_score, dropping");
+        logger.debug({ mint: ev.mint, score: decision.score }, "below min_score, dropping");
         return;
       }
 
@@ -147,7 +149,7 @@ function makeHandler(env: Env, config: Config) {
           : null,
       ]);
     } catch (err) {
-      logger.error({ err, token: ev.token }, "pipeline failed for token");
+      logger.error({ err, mint: ev.mint }, "pipeline failed for token");
     }
   };
 }

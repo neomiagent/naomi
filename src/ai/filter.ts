@@ -3,9 +3,9 @@ import type { Logger } from "pino";
 import type { Config, Env } from "../config.js";
 import type { EnrichedToken, FilterDecision } from "../types.js";
 
-const SYSTEM_PROMPT = `You are Naomi, an Ethereum token-launch risk analyzer.
+const SYSTEM_PROMPT = `You are Naomi, a Solana token-launch forensic analyzer.
 
-You receive a JSON snapshot of a freshly created Uniswap pool: contract flags, honeypot simulation result, liquidity, holders, deployer history, social signals.
+You receive a JSON snapshot of a freshly created pump.fun or raydium-launchpad token: mint authority status, mint metadata, liquidity (bonding-curve or pool), holders, deployer history, social signals, and a "first 60 seconds" snapshot covering buyers, jito-tagged bundles, sniper pubkeys, and whether the deployer self-bought during the window.
 
 Return ONLY a JSON object with these fields:
 {
@@ -16,17 +16,18 @@ Return ONLY a JSON object with these fields:
 }
 
 Verdict definitions:
-- "alert": clean cap table, locked or burned LP, no honeypot, deployer with track record. Worth attention.
-- "watch": passes basic safety but has one or two yellow flags (low liquidity, unverified, no socials).
-- "ignore": clear rug signals, honeypot, mint/blacklist function active, top10 concentration too high, deployer with rug history.
+- "alert": authorities renounced, healthy buyer distribution in first 60s, deployer not self-buying, low jito-bundle concentration. Worth attention.
+- "watch": passes basic safety but has one or two yellow flags (low buyer count in 60s, single dominant buyer, no socials, mutable metadata).
+- "ignore": clear rug signals — mint or freeze authority not renounced on a memecoin, dev self-bought in first 60s, top-10 holder concentration too high, deployer with prior rug history, jito-bundle dominance suggesting coordinated sniping.
 
 Hard rules:
-- honeypot.canSell == false → ignore.
-- contract.hasMintFunction && !contract.ownershipRenounced → ignore.
-- contract.hasBlacklistFunction → ignore.
-- holders.top10Pct > 70 (excluding LP and burn) → ignore unless LP burned >95%.
-- deployer.rugRatio > 0.4 with >3 prior launches → ignore.
-- liquidity below 1 ETH and no socials → ignore.
+- mintAuthority.mintAuthority != null on a memecoin → ignore.
+- mintAuthority.freezeAuthority != null on a memecoin → ignore.
+- first60s.devSelfBought == true → ignore.
+- holders.top10ConcentrationPct > 70 (excluding bonding curve / pool) → ignore.
+- deployer.priorTokensDeployed > 5 with deployer.ageDays < 30 → ignore.
+- first60s.jitoBundledBuys > 0.6 * first60s.totalBuys → ignore (coordinated sniping).
+- liquidity below 1 SOL and no socials → ignore.
 
 Be precise. The output is consumed by humans and webhooks for decision support, not for automated trading. Naomi does not trade. Naomi reports.`;
 
@@ -44,14 +45,14 @@ export async function runFilter(
 
   const userPayload = JSON.stringify(
     {
-      token: token.token,
-      pair: token.pair,
+      mint: token.mint,
+      poolOrCurve: token.poolOrCurve,
       source: token.source,
-      initialLiquidityEth: token.initialLiquidityEth,
+      initialLiquiditySol: token.initialLiquiditySol,
       metadata: token.metadata,
-      features: token.features,
+      features: serializeFeatures(token),
     },
-    null,
+    bigintReplacer,
     2,
   );
 
@@ -82,22 +83,40 @@ function heuristicOnly(token: EnrichedToken): FilterDecision {
   const flags: string[] = [];
   const f = token.features;
 
-  if (!f.honeypot.canSell) flags.push("honeypot");
-  if (f.contract.hasMintFunction && !f.contract.ownershipRenounced) flags.push("mint_active");
-  if (f.contract.hasBlacklistFunction) flags.push("blacklist");
-  if (!f.contract.verified) flags.push("unverified");
-  if (f.holders.top10Pct > 70) flags.push("top10_concentrated");
-  if (f.liquidity.poolEthValue < 1) flags.push("low_liquidity");
-  if (f.deployer.rugRatio > 0.4 && f.deployer.tokensLaunched > 3) flags.push("rug_history");
+  if (f.mintAuthority.mintAuthority !== null) flags.push("mint_authority_active");
+  if (f.mintAuthority.freezeAuthority !== null) flags.push("freeze_authority_active");
+  if (f.first60s.devSelfBought) flags.push("dev_self_bought");
+  if (f.holders.top10ConcentrationPct > 70) flags.push("top10_concentrated");
+  if (f.liquidity.solReserve < 1) flags.push("low_liquidity");
+  if (f.deployer.priorTokensDeployed > 5 && f.deployer.ageDays < 30) {
+    flags.push("rug_history");
+  }
+  if (
+    f.first60s.totalBuys > 0 &&
+    f.first60s.jitoBundledBuys / f.first60s.totalBuys > 0.6
+  ) {
+    flags.push("jito_bundle_dominance");
+  }
 
   const blockers = flags.filter((x) =>
-    ["honeypot", "mint_active", "blacklist", "rug_history"].includes(x),
+    [
+      "mint_authority_active",
+      "freeze_authority_active",
+      "dev_self_bought",
+      "rug_history",
+      "jito_bundle_dominance",
+    ].includes(x),
   );
   if (blockers.length > 0) {
     return { verdict: "ignore", score: 0, reason: `blocked: ${blockers.join(", ")}`, flags };
   }
-  if (flags.length === 0 && f.liquidity.lpTokenLocked) {
-    return { verdict: "alert", score: 0.7, reason: "clean snapshot, lp locked", flags };
+  if (flags.length === 0 && f.mintAuthority.isImmutable) {
+    return {
+      verdict: "alert",
+      score: 0.7,
+      reason: "clean snapshot, authorities renounced",
+      flags,
+    };
   }
   return { verdict: "watch", score: 0.4, reason: "yellow flags only", flags };
 }
@@ -111,7 +130,7 @@ function parseDecision(text: string): FilterDecision {
       obj.verdict === "alert" || obj.verdict === "watch" ? obj.verdict : "ignore";
     return {
       verdict,
-      score: typeof obj.score === "number" ? Math.max(0, Math.min(1, obj.score)) : 0,
+      score: typeof obj.score === "number" ? Math.max(0, Math.min(0.95, obj.score)) : 0,
       reason: typeof obj.reason === "string" ? obj.reason.slice(0, 140) : "",
       flags: Array.isArray(obj.flags) ? obj.flags.filter((x: unknown) => typeof x === "string") : [],
     };
@@ -119,8 +138,19 @@ function parseDecision(text: string): FilterDecision {
     return { verdict: "ignore", score: 0, reason: "json parse error", flags: [] };
   }
 }
+
+function serializeFeatures(token: EnrichedToken) {
+  // top-level features object is fine; bigint fields will be coerced via replacer.
+  return token.features;
+}
+
+function bigintReplacer(_key: string, value: unknown): unknown {
+  return typeof value === "bigint" ? value.toString() : value;
+}
 // saves tokens on burst windows
 // model sometimes adds 'here is the verdict:' prefix
 // shared with output sinks
 // naomi must work key-less for ci
 // verdicts are short, prevent runaway
+// score capped at 0.95 — detector, not oracle
+// dev self-buying in first 60s is the cleanest single rug-warmup signal on solana

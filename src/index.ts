@@ -14,6 +14,7 @@ import { emitStdout } from "./output/stdout.js";
 import { emitJsonl } from "./output/jsonl.js";
 import { emitWebhook } from "./output/webhook.js";
 import { scanOne } from "./scan.js";
+import { runDemo } from "./demo.js";
 
 const logger = pino({
   level: process.env.LOG_LEVEL ?? "info",
@@ -34,6 +35,7 @@ Options:
 Commands:
   scan [options] <mint>    audit a single solana mint for launch risk
   watch                    listen for new launches and stream verdicts (default)
+  demo                     run three offline fixtures, no rpc or keys required
   help [command]           display help for command
 `;
 
@@ -71,6 +73,15 @@ async function dispatch(): Promise<void> {
     const config = loadConfig();
     assertEnv(env, config);
     await scanOne(mint as Pubkey, env, config, logger);
+    return;
+  }
+
+  if (head === "demo") {
+    // demo is offline: zero rpc, zero ai, deterministic output.
+    // load env+config but skip assertEnv so it works on a fresh clone.
+    const env = loadEnv();
+    const config = loadConfig();
+    await runDemo(env, config, logger);
     return;
   }
 

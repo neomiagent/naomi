@@ -31,8 +31,8 @@ const ConfigSchema = z.object({
   }),
   output: z.object({
     stdout: z.boolean(),
-    jsonl_path: z.string().optional(),
-    webhook_url: z.string().optional(),
+    jsonl_path: z.string().nullable().optional(),
+    webhook_url: z.string().nullable().optional(),
     webhook_min_verdict: z.enum(["alert", "watch", "ignore"]).default("watch"),
   }),
 });

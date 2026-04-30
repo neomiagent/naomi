@@ -1,6 +1,6 @@
 {
   "name": "naomi-scanner",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "homepage": "https://github.com/neomiagent/naomi",
   "description": "Naomi — autonomous forensic analyzer for Solana token launches. Watches pump.fun + raydium-launchpad, snapshots the first 60 seconds (buyers, jito bundles, dev wallet), scores with Claude. No trading, just verdicts.",
   "type": "module",

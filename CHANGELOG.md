@@ -2,6 +2,15 @@
 
 all notable changes to this project are documented here. format follows [keep a changelog](https://keepachangelog.com/), versioning follows [semver](https://semver.org/).
 
+## [0.2.1] - 2026-04-30 — offline demo command
+
+### added
+- `naomi demo` subcommand: runs three pre-baked fixtures (alert / watch / ignore) through the heuristic-only filter and emits to stdout. zero rpc, zero api keys, deterministic output. used for screencasts and quick "what does it look like" checks.
+- `src/demo.ts` with the three fixture shapes — clean wif-style launch, low-liquidity yellow flag, dev self-bought + jito-dominance rug
+
+### fixed
+- `output.webhook_url` and `output.jsonl_path` zod schema accepts `null` (yaml parses empty values as null, not undefined)
+
 ## [0.2.0] - 2026-04-30 — chain pivot to solana + first-60s scope
 
 this is a scope change. the v0.1.x line was an ethereum token-launch analyzer.
@@ -86,6 +95,7 @@ first tagged version. core analyzer pipeline runs end to end.
 - mempool source had no decoder yet, only a placeholder.
 - holder distribution required etherscan pro tier.
 
+[0.2.1]: https://github.com/neomiagent/naomi/releases/tag/v0.2.1
 [0.2.0]: https://github.com/neomiagent/naomi/releases/tag/v0.2.0
 [0.1.0]: https://github.com/neomiagent/naomi/releases/tag/v0.1.0
 <!-- v0.2.0 — chain pivot to solana, first-60s scope -->

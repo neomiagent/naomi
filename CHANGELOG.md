@@ -2,6 +2,19 @@
 
 all notable changes to this project are documented here. format follows [keep a changelog](https://keepachangelog.com/), versioning follows [semver](https://semver.org/).
 
+## [0.2.2] - 2026-04-30 — scan short-circuit for demo mints
+
+### added
+- `naomi scan <demo-mint>` short-circuits to the corresponding fixture verdict from `src/demo.ts`. lets a screencast where the final command is `naomi scan <mint>` produce a rich, colored verdict without rpc or api keys.
+- three demo mints recognized:
+  - `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v` -> ALERT (clean launch)
+  - `5fBpMZswQEZ3X8rFK1VoZjt8vGNcTzCuAa4yDqHVK1m9` -> WATCH (thin liquidity)
+  - `7HzPvBhdVR4Mr8qGHMvSQsQqAhnX1qPpe9R2mNqQa5eX` -> IGNORE (dev self-bought + jito dominance)
+
+### changed
+- `assertEnv` is skipped for demo mints (they never touch rpc or ai)
+- `naomi scan <real-mint>` (non-demo) now requires SOL_RPC_URL and exits with a clear message if missing
+
 ## [0.2.1] - 2026-04-30 — offline demo command
 
 ### added
@@ -95,6 +108,7 @@ first tagged version. core analyzer pipeline runs end to end.
 - mempool source had no decoder yet, only a placeholder.
 - holder distribution required etherscan pro tier.
 
+[0.2.2]: https://github.com/neomiagent/naomi/releases/tag/v0.2.2
 [0.2.1]: https://github.com/neomiagent/naomi/releases/tag/v0.2.1
 [0.2.0]: https://github.com/neomiagent/naomi/releases/tag/v0.2.0
 [0.1.0]: https://github.com/neomiagent/naomi/releases/tag/v0.1.0

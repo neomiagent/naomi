@@ -2,6 +2,14 @@
 
 all notable changes to this project are documented here. format follows [keep a changelog](https://keepachangelog.com/), versioning follows [semver](https://semver.org/).
 
+## [0.2.3] - 2026-04-30 — npx naomi works on a fresh clone
+
+### added
+- `prepare` lifecycle script that runs `tsc` automatically after `npm install`. lets `npx naomi` (which points at `dist/index.js` via the `bin` field) work immediately on a fresh clone, no manual `npm run build` step.
+
+### changed
+- screencast flow simplified to: `git clone` -> `cd naomi` -> `npm install` -> `npx naomi scan <mint>`. four commands, no env setup, no api keys, no source-runner ugliness.
+
 ## [0.2.2] - 2026-04-30 — scan short-circuit for demo mints
 
 ### added
@@ -108,6 +116,7 @@ first tagged version. core analyzer pipeline runs end to end.
 - mempool source had no decoder yet, only a placeholder.
 - holder distribution required etherscan pro tier.
 
+[0.2.3]: https://github.com/neomiagent/naomi/releases/tag/v0.2.3
 [0.2.2]: https://github.com/neomiagent/naomi/releases/tag/v0.2.2
 [0.2.1]: https://github.com/neomiagent/naomi/releases/tag/v0.2.1
 [0.2.0]: https://github.com/neomiagent/naomi/releases/tag/v0.2.0

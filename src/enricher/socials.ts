@@ -1,14 +1,29 @@
-import type { TokenEvent, SocialSignals } from "../types.js";
+import type { SocialFlags, TokenEvent } from "../types.js";
 
-export function checkSocials(ev: TokenEvent): SocialSignals {
+// extracts socials from the metaplex metadata uri (when present). pump.fun
+// tokens carry uri pointing at a json with twitter/telegram/website fields.
+//
+// for v0.2 we only check metadata embedded in the event. v0.3 will fetch
+// the metadata json and parse it.
+
+export function checkSocials(ev: TokenEvent): SocialFlags {
   const meta = ev.metadata ?? {};
-  return {
-    hasTwitter: Boolean(meta.twitter),
-    hasTelegram: Boolean(meta.telegram),
-    // twitter age + follower count needs a separate API (twitter API or
-    // scrape). Left undefined so downstream prompts know the field is absent.
+  const flags: SocialFlags = {
+    twitter: meta.twitter,
+    telegram: meta.telegram,
+    website: meta.website,
+    notes: [],
   };
+
+  if (!flags.twitter && !flags.telegram && !flags.website) {
+    flags.notes.push("socials:none_listed");
+  }
+  if (meta.name && meta.symbol && meta.symbol.toLowerCase() === meta.name.toLowerCase()) {
+    flags.matchesNamePattern = true;
+    flags.notes.push("socials:name_equals_symbol");
+  }
+  return flags;
 }
-// min age 90 days lowers spoof risk
-// telegram links inconsistent across deployers
-// v0.2: real api probe vs metadata only
+// metaplex uri parse lands in v0.3
+// suspicious: name == symbol pattern from low-effort copies
+// fixture replay pending

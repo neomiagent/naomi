@@ -1,89 +1,42 @@
 import type { Logger } from "pino";
-import type { Address, DeployerStats } from "../types.js";
+import type { DeployerStats, Pubkey } from "../types.js";
 import type { Env } from "../config.js";
 
-interface DeployerCache {
-  tokensLaunched: number;
-  rugCount: number;
-  bestMultiplier: number;
-}
-
-// In-memory deployer history. For production, swap with sqlite/postgres so
-// the analyzer accumulates a long-running view of repeat offenders.
-const cache = new Map<Address, DeployerCache>();
-
-interface ContractCreatedTx {
-  contractAddress: string;
-  txreceipt_status: string;
-}
+// deployer history. on solana the "deployer" is the fee payer of the
+// create transaction. we ask: how many other tokens has this pubkey
+// deployed before, and how old is the wallet?
+//
+// stub. v0.3 wires helius enriched-tx api or rpc getSignaturesForAddress.
 
 export async function checkDeployer(
-  deployer: Address,
+  pubkey: Pubkey,
   env: Env,
   logger: Logger,
 ): Promise<DeployerStats> {
-  const stats: DeployerStats = {
-    address: deployer,
-    tokensLaunched: 0,
-    rugRatio: 0,
-    bestMultiplier: 0,
-    knownScammer: false,
+  if (!env.rpcUrl || pubkey === "stub") {
+    return {
+      pubkey,
+      priorTokensDeployed: 0,
+      ageDays: 0,
+      solBalanceAtCreate: 0,
+      notes: ["skipped:no_rpc_or_stub"],
+    };
+  }
+
+  // TODO(senri): use helius enhanced-tx parsed=true to find prior token
+  // creations from this pubkey. fall back to getSignaturesForAddress
+  // and inspect each tx for spl-token initializeMint instructions.
+  logger.debug({ pubkey }, "deployer stub");
+
+  return {
+    pubkey,
+    priorTokensDeployed: 0,
+    ageDays: 0,
+    solBalanceAtCreate: 0,
+    notes: ["deployer:not_yet_fetched"],
   };
-
-  const cached = cache.get(deployer);
-  if (cached) {
-    stats.tokensLaunched = cached.tokensLaunched;
-    stats.rugRatio = cached.tokensLaunched > 0 ? cached.rugCount / cached.tokensLaunched : 0;
-    stats.bestMultiplier = cached.bestMultiplier;
-    return stats;
-  }
-
-  if (!env.etherscanApiKey) return stats;
-
-  // approximate "tokens launched" by counting contract-creation txs from this
-  // address. Distinguishing tokens from arbitrary contracts requires checking
-  // each result for ERC20 interface; we approximate by count.
-  const url =
-    `https://api.etherscan.io/api?module=account&action=txlistinternal` +
-    `&address=${deployer}&startblock=0&endblock=99999999&page=1&offset=100` +
-    `&sort=desc&apikey=${env.etherscanApiKey}`;
-
-  try {
-    const res = await fetch(url);
-    const data = (await res.json()) as { status: string; result: ContractCreatedTx[] };
-    if (data.status !== "1") return stats;
-
-    const created = data.result.filter((t) => t.contractAddress && t.contractAddress !== "");
-    stats.tokensLaunched = created.length;
-    cache.set(deployer, {
-      tokensLaunched: stats.tokensLaunched,
-      rugCount: 0,
-      bestMultiplier: 0,
-    });
-  } catch (err) {
-    logger.debug({ err, deployer }, "deployer history fetch failed");
-  }
-
-  return stats;
 }
-
-// Called by output sinks once a token's outcome is known (post-rug or
-// post-pump) so the cache learns. Stub for now.
-export function recordOutcome(
-  deployer: Address,
-  outcome: "rug" | "runner",
-  multiplier?: number,
-): void {
-  const entry = cache.get(deployer) ?? {
-    tokensLaunched: 0,
-    rugCount: 0,
-    bestMultiplier: 0,
-  };
-  if (outcome === "rug") entry.rugCount += 1;
-  if (outcome === "runner" && multiplier && multiplier > entry.bestMultiplier) {
-    entry.bestMultiplier = multiplier;
-  }
-  cache.set(deployer, entry);
-}
-// addresses are case-insensitive
-// ratio drives deployer trust score
+// pubkey age is approximated by oldest signature involving the pubkey
+// solana wallets are funded by transfers, not eth-style nonce
+// prior_tokens_deployed >5 in <30 days is a strong red flag
+// fixture replay pending
